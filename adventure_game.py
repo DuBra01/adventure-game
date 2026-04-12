@@ -3,15 +3,29 @@
 # Task 1: simple print to confirm setup works
 print("Game is starting...")
 
+player_name = ""
+
 
 def play_again():
-    print("\nDo you want to start again? (yes/no)")
-    choice = input("> ").lower().strip()
+    print("\nGame ended.")
+    print("If you want to play again, type 'yes'")
+    print("If you want to exit, type 'exit'")
 
-    if choice == "yes":
-        start_game()
-    else:
-        print("Thanks for playing. Goodbye!")
+    while True:
+        choice = input("> ").lower().strip()
+
+        if choice == "yes":
+            print(f"\nHi {player_name}, you like adventure!")
+            print("Good you're back — have luck this time!\n")
+            start_game()
+            break
+        elif choice == "exit":
+            print("\nThanks for playing. Goodbye!")
+            print("To start the game again, run:")
+            print("python3 adventure_game.py\n")
+            break
+        else:
+            print("Please type 'yes' to play again or 'exit' to quit.")
 
 
 def forest_path():
@@ -103,20 +117,31 @@ def cave_path():
 
 
 def start_game():
+    global player_name
+
     print("\nWelcome to the Adventure Game!")
     print("You are an explorer on a quest to find a legendary treasure hidden in an ancient land.")
     print("Your journey will be filled with challenges and decisions that will shape your destiny.")
 
-    name = input("\nWhat is your name, explorer? ").strip()
-
-    print(f"\nHello, {name}!")
-    print("Your quest begins now.")
+    if player_name == "":
+        player_name = input("\nWhat is your name, explorer? ").strip()
+        print(f"\nHello, {player_name}!")
+        print("Your quest begins now.")
+    else:
+        print(f"\nWelcome back, {player_name}!")
+        print("Have fun in your next adventure!")
 
     print("\nAre you ready to begin your adventure? (yes/no)")
     ready = input("> ").lower().strip()
 
-    if ready != "yes":
+    if ready in ["yes", "y"]:
+        pass
+    elif ready in ["no", "n"]:
         print("Maybe next time! Goodbye.")
+        return
+    else:
+        print("Invalid input. Please answer with yes/y or no/n.")
+        start_game()
         return
 
     print("\nYou stand before two possible paths:")
@@ -127,10 +152,10 @@ def start_game():
     choice = input("> ").lower().strip()
 
     if choice == "1" or choice == "forest":
-        print(f"\n{name}, you step into the dark forest...")
+        print(f"\n{player_name}, you step into the dark forest...")
         forest_path()
     elif choice == "2" or choice == "cave":
-        print(f"\n{name}, you enter the mysterious cave...")
+        print(f"\n{player_name}, you enter the mysterious cave...")
         cave_path()
     else:
         print("\nInvalid choice. Please restart the game.")
